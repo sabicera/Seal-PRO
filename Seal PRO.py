@@ -14,7 +14,7 @@ from converter_core import SealCheckConverterCore
 from updater import AutoUpdater
 
 # Version
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 # GitHub repo info
 GITHUB_OWNER = "sabicera"
@@ -37,7 +37,6 @@ ACCENT_RED = "#ff4757"     # Clear/Error button
 ACCENT_BLUE = "#1e90ff"    # Info/Change button
 
 class CTkScrollableFrame(ctk.CTkScrollableFrame):
-    """Custom scrollable frame for filters"""
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 
@@ -97,7 +96,6 @@ class SealCheckConverterGUI:
         threading.Thread(target=self.check_updates_background, daemon=True).start()
         
     def check_updates_background(self):
-        """Check for updates in background"""
         try:
             has_update, latest, url, notes = self.updater.check_for_updates()
             if has_update:
@@ -108,13 +106,11 @@ class SealCheckConverterGUI:
             self.log("You're up to date (v{})".format(__version__))
     
     def prompt_update(self, latest_version, download_url, release_notes):
-        """Show update prompt to user"""
         if messagebox.askyesno("Update Available", 
             f"New version {latest_version} available!\n\nDownload and install?"):
             self.download_and_install_update(download_url)
     
     def download_and_install_update(self, download_url):
-        """Download and install update"""
         progress_window = ctk.CTkToplevel(self.root)
         progress_window.title("Downloading Update")
         progress_window.geometry("450x180")
@@ -155,7 +151,6 @@ class SealCheckConverterGUI:
         threading.Thread(target=download_thread, daemon=True).start()
         
     def load_config(self):
-        """Load saved configuration"""
         try:
             if self.config_file.exists():
                 with open(self.config_file, 'r') as f:
@@ -171,7 +166,6 @@ class SealCheckConverterGUI:
             self.vessel_voyage_pairs = []
     
     def save_config(self):
-        """Save current configuration"""
         try:
             # Collect all vessel/voyage pairs
             pairs = []
@@ -191,12 +185,10 @@ class SealCheckConverterGUI:
             print(f"Error saving config: {e}")
     
     def on_closing(self):
-        """Handle window closing"""
         self.save_config()
         self.root.destroy()
     
     def uppercase_vessel_trace(self, var):
-        """Convert vessel name to uppercase"""
         def trace_func(*args):
             value = var.get()
             if value != value.upper():
@@ -204,7 +196,6 @@ class SealCheckConverterGUI:
         return trace_func
     
     def uppercase_voyage_trace(self, var):
-        """Convert voyage number to uppercase"""
         def trace_func(*args):
             value = var.get()
             if value != value.upper():
@@ -212,7 +203,6 @@ class SealCheckConverterGUI:
         return trace_func
     
     def generate_output_filename(self, vessel, pol):
-        """Generate output filename based on POL value"""
         now = datetime.datetime.now()
         time_str = now.strftime("%H%M")
         number = now.strftime("%S%f")[:4]
@@ -240,7 +230,6 @@ class SealCheckConverterGUI:
         right_panel.pack(side='right', fill='both', expand=False)
         
         # ========== LEFT PANEL ==========
-        
         # Drop zone frame
         drop_frame = ctk.CTkFrame(
             left_panel, 
@@ -447,7 +436,6 @@ class SealCheckConverterGUI:
         clear_btn.pack(fill='x')
         
         # ========== RIGHT PANEL - CONSOLE ==========
-        
         console_header = ctk.CTkFrame(right_panel, fg_color="transparent")
         console_header.pack(fill='x', pady=(0, 10))
         
@@ -739,7 +727,6 @@ class SealCheckConverterGUI:
         threading.Thread(target=process_thread, daemon=True).start()
 
 def get_downloads_folder(self):
-    """Get the Downloads folder path for any user"""
     import platform
     
     system = platform.system()

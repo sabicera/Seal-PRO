@@ -15,10 +15,6 @@ class AutoUpdater:
         self.github_api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
         
     def check_for_updates(self):
-        """
-        Check if a new version is available
-        Returns: (has_update, latest_version, download_url, release_notes) or (False, None, None, None)
-        """
         try:
             response = requests.get(self.github_api_url, timeout=5)
             if response.status_code == 200:
@@ -47,10 +43,6 @@ class AutoUpdater:
             return False, None, None, None
     
     def download_update(self, download_url, progress_callback=None):
-        """
-        Download the update file
-        Returns: Path to downloaded file or None on error
-        """
         try:
             if getattr(sys, 'frozen', False):
                 # Running as exe
@@ -81,10 +73,6 @@ class AutoUpdater:
             return None
     
     def apply_update(self, new_exe_path):
-        """
-        Apply the update by replacing current exe with new one
-        This will restart the application
-        """
         try:
             if getattr(sys, 'frozen', False):
                 current_exe = Path(sys.executable)
