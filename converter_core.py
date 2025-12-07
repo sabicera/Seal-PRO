@@ -158,7 +158,7 @@ class SealCheckConverterCore:
                 direct_mappings = {
                     'Unit': 'Container',
                     'POL': 'POL',
-                    'POD': 'POD',
+                    'SPOD': 'POD',
                     'ISO': 'Type',
                     'Slot (EXE)': 'Slot',
                     'Voyage In': None,  # Not mapped to template, but needed for filtering
